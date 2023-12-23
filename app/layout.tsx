@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Provider from "@/components/Provider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { FontClassNames } from "@/utils/font";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={FontClassNames}>
         <Provider>
           <Nav />
           {children}

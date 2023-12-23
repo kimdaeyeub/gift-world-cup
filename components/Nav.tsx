@@ -9,10 +9,18 @@ import {
   signOut,
   useSession,
 } from "next-auth/react";
+import { Cute_Font } from "next/font/google";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+
+const font = Cute_Font({ weight: "400", subsets: ["latin"] });
 
 const Nav = () => {
+  const router = useRouter();
+  const pathName = usePathname();
   const { data: session } = useSession();
   const [providers, setProviders] = useState<Record<
     LiteralUnion<string>,
@@ -27,7 +35,10 @@ const Nav = () => {
     signOut();
   };
 
-  const onClickGoHome = () => {};
+  const onClickGoHome = () => {
+    router.push("/");
+  };
+
   useEffect(() => {
     const setUpProviders = async () => {
       const response = await getProviders();
@@ -38,20 +49,58 @@ const Nav = () => {
     setUpProviders();
   }, []);
   return (
-    <div className="w-full px-32 py-6 flex justify-between items-center">
+    <div className="w-full px-32 py-6 pt-8 flex justify-between items-start">
       <h1
         onClick={onClickGoHome}
         className="text-4xl font-semibold cursor-pointer"
       >
         Logo
       </h1>
-      <div className="flex space-x-6 items-center justify-center">
+      <div className="flex space-x-8 items-start justify-center text-xl h-full font-poorStory">
         {session?.user ? (
           <>
-            <span className="cursor-pointer">선물 추가하기</span>
-            <span className="cursor-pointer">선물 월드컵 만들기</span>
-            <span>선물 월드컵</span>
-            <button onClick={onClickLogoutBtn}>로그아웃</button>
+            <div className="relative h-full">
+              <Link href="/items/add">
+                <span className="cursor-pointer">선물 추가하기</span>
+              </Link>
+              {pathName === "/items/add" ? (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                />
+              ) : (
+                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
+              )}
+            </div>
+            <div className="relative h-full">
+              <Link href="/tournament/add">
+                <span className="cursor-pointer">선물 월드컵 만들기</span>
+              </Link>
+              {pathName === "/tournament/add" ? (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                />
+              ) : (
+                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
+              )}
+            </div>
+            <div className="relative h-full">
+              <Link href="/tournament">
+                <span className="cursor-pointer">선물 월드컵</span>
+              </Link>
+              {pathName === "/tournament" ? (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                />
+              ) : (
+                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
+              )}
+            </div>
+            <button className="h-full" onClick={onClickLogoutBtn}>
+              로그아웃
+            </button>
             <Image
               src={session.user.image!}
               alt="avatar_url"
