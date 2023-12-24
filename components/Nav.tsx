@@ -63,6 +63,17 @@ const Nav = () => {
       <div className="flex space-x-8 items-center justify-center text-xl font-poorStory">
         {session?.user ? (
           <>
+            <div className="relative h-full">
+              <Link href="/items">
+                <span className="cursor-pointer">선물 조회하기</span>
+              </Link>
+              {pathName === "/items" && (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 h-1 absolute bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
+                />
+              )}
+            </div>
             <div className="relative">
               <Link href="/items/add">
                 <span className="cursor-pointer">선물 추가하기</span>
@@ -110,6 +121,17 @@ const Nav = () => {
           </>
         ) : (
           <>
+            <div className="relative h-full">
+              <Link href="/items">
+                <span className="cursor-pointer">선물 조회하기</span>
+              </Link>
+              {pathName === "/items" && (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 h-1 absolute bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
+                />
+              )}
+            </div>
             <div className="relative h-full">
               <Link href="/tournament">
                 <span className="cursor-pointer">선물 월드컵</span>
