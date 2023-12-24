@@ -27,6 +27,10 @@ const Nav = () => {
     ClientSafeProvider
   > | null>(null);
 
+  const onClickAvatarImage = () => {
+    router.push("/profile");
+  };
+
   const onClickLoginBtn = () => {
     signIn(providers?.google.id);
   };
@@ -49,59 +53,54 @@ const Nav = () => {
     setUpProviders();
   }, []);
   return (
-    <div className="w-full px-32 py-6 pt-8 flex justify-between items-start">
+    <div className="w-full px-32 py-4 flex justify-between items-center">
       <h1
         onClick={onClickGoHome}
         className="text-4xl font-semibold cursor-pointer"
       >
         Logo
       </h1>
-      <div className="flex space-x-8 items-start justify-center text-xl h-full font-poorStory">
+      <div className="flex space-x-8 items-center justify-center text-xl font-poorStory">
         {session?.user ? (
           <>
-            <div className="relative h-full">
+            <div className="relative">
               <Link href="/items/add">
                 <span className="cursor-pointer">선물 추가하기</span>
               </Link>
-              {pathName === "/items/add" ? (
+              {pathName === "/items/add" && (
                 <motion.div
                   layoutId="nav_under_bar"
-                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                  className="w-14 h-1 bg-slate-900 rounded-full absolute top-full mt-2 m-auto left-0 right-0"
                 />
-              ) : (
-                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
               )}
             </div>
-            <div className="relative h-full">
+            <div className="relative">
               <Link href="/tournament/add">
                 <span className="cursor-pointer">선물 월드컵 만들기</span>
               </Link>
-              {pathName === "/tournament/add" ? (
+              {pathName === "/tournament/add" && (
                 <motion.div
                   layoutId="nav_under_bar"
-                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                  className="w-14 absolute h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
                 />
-              ) : (
-                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
               )}
             </div>
             <div className="relative h-full">
               <Link href="/tournament">
                 <span className="cursor-pointer">선물 월드컵</span>
               </Link>
-              {pathName === "/tournament" ? (
+              {pathName === "/tournament" && (
                 <motion.div
                   layoutId="nav_under_bar"
-                  className="w-14 h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-full right-full"
+                  className="w-14 h-1 absolute bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
                 />
-              ) : (
-                <div className="w-14 h-1 rounded-full top-full mt-2 m-auto left-full right-full" />
               )}
             </div>
             <button className="h-full" onClick={onClickLogoutBtn}>
               로그아웃
             </button>
             <Image
+              onClick={onClickAvatarImage}
               src={session.user.image!}
               alt="avatar_url"
               width={200}
@@ -110,7 +109,20 @@ const Nav = () => {
             />
           </>
         ) : (
-          <button onClick={onClickLoginBtn}>로그인</button>
+          <>
+            <div className="relative h-full">
+              <Link href="/tournament">
+                <span className="cursor-pointer">선물 월드컵</span>
+              </Link>
+              {pathName === "/tournament" && (
+                <motion.div
+                  layoutId="nav_under_bar"
+                  className="w-14 absolute h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
+                />
+              )}
+            </div>
+            <button onClick={onClickLoginBtn}>로그인</button>
+          </>
         )}
       </div>
     </div>
