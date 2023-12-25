@@ -34,7 +34,7 @@ const Add = () => {
           />
           <h1 className="mt-4 mb-3 text-xl font-medium">테그</h1>
           <input className="w-full outline-none px-4 py-3 rounded-xl mt-3 bg-gray-200" />
-          <button className="px-3 py-1.5 bg-black text-white rounded-md mt-4">
+          <button className="px-3 py-1.5 bg-black text-white rounded-md mt-4 place-items-end">
             추가하기
           </button>
         </div>

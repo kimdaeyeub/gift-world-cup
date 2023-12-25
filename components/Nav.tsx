@@ -96,7 +96,7 @@ const Nav = () => {
                 />
               )}
             </div>
-            <div className="relative h-full">
+            {/* <div className="relative h-full">
               <Link href="/tournament">
                 <span className="cursor-pointer">선물 월드컵</span>
               </Link>
@@ -106,7 +106,7 @@ const Nav = () => {
                   className="w-14 h-1 absolute bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
                 />
               )}
-            </div>
+            </div> */}
             <button className="h-full" onClick={onClickLogoutBtn}>
               로그아웃
             </button>
@@ -132,7 +132,7 @@ const Nav = () => {
                 />
               )}
             </div>
-            <div className="relative h-full">
+            {/* <div className="relative h-full">
               <Link href="/tournament">
                 <span className="cursor-pointer">선물 월드컵</span>
               </Link>
@@ -142,7 +142,7 @@ const Nav = () => {
                   className="w-14 absolute h-1 bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
                 />
               )}
-            </div>
+            </div> */}
             <button onClick={onClickLoginBtn}>로그인</button>
           </>
         )}
