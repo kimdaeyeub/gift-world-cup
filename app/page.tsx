@@ -1,4 +1,5 @@
 import ItemCard from "@/components/ItemCard";
+import TournamentCard from "@/components/TournamentCard";
 
 export default function Home() {
   return (
@@ -23,11 +24,11 @@ export default function Home() {
         </svg> */}
       </div>
       <section className="min-h-96 w-full py-16 px-32 grid grid-cols-4 gap-5">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <TournamentCard />
+        <TournamentCard />
+        <TournamentCard />
+        <TournamentCard />
+        <TournamentCard />
       </section>
     </>
   );

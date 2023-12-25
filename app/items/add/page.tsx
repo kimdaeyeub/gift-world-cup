@@ -1,6 +1,19 @@
-import React from "react";
+"use client";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Add = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(session?.user);
+    if (!session?.user) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <div className="w-full h-screen px-44 py-14 bg-purple-400">
       <form className="rounded-2xl grid grid-cols-2 p-5 bg-white">

@@ -1,8 +1,13 @@
+"use client";
+
 import ItemTextBox from "@/components/ItemTextBox";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const ItemDetail = () => {
+  const pathName = usePathname();
+  console.log(pathName);
   return (
     <div className="w-full h-full">
       <div className="w-full h-80 bg-purple-400 relative mb-44">

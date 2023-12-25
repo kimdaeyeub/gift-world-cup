@@ -1,6 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Variants, motion } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const items = [
   {
@@ -19,6 +21,8 @@ const items = [
 ];
 
 const AddTournament = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [openDropDownBtn, setOpenDropDownBtn] = useState(false);
   const [selectItem, setSelectItem] = useState<number[]>([]);
   const [option, setOption] = useState("대진 결정");
@@ -47,48 +51,63 @@ const AddTournament = () => {
 
   const onClickAddWorldCup = () => {};
 
+  useEffect(() => {
+    console.log(session?.user);
+    if (!session?.user) {
+      router.push("/");
+    }
+  }, []);
   return (
     <div className="w-full h-full flex flex-col justify-start items-end px-36 py-8">
-      <div className="w-64 relative mb-8">
-        <button
-          onClick={onClickDropDown}
-          className="w-full px-6 py-2 flex justify-between items-center space-x-8 border rounded-md"
-        >
-          <span>{option}</span>
-          <svg
-            width={20}
-            data-slot="icon"
-            fill="none"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
+      <div className="w-full mb-8 flex justify-between items-center space-x-10">
+        <div className="w-full flex justify-center items-center space-x-4">
+          <span className="text-nowrap text-xl font-medium">제목:</span>
+          <input
+            placeholder="월드컵 이름..."
+            className="bg-gray-100 px-4 py-2 rounded-md w-full"
+          />
+        </div>
+        <div className="w-64 relative">
+          <button
+            onClick={onClickDropDown}
+            className="w-full px-6 py-2 flex justify-between items-center space-x-8 border rounded-md"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
-            ></path>
-          </svg>
-        </button>
-        {openDropDownBtn && (
-          <motion.div
-            initial={{ opacity: 0, y: -100 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full bg-slate-200 rounded-md flex flex-col justify-center items-center absolute top-full left-0 right-0 mt-4"
-          >
-            <span onClick={() => onClick(8)} className="w-full py-4 px-6">
-              8강 대진
-            </span>
-            <span onClick={() => onClick(16)} className="w-full py-4 px-6">
-              16강 대진
-            </span>
-            <span onClick={() => onClick(32)} className="w-full py-4 px-6">
-              32강 대진
-            </span>
-          </motion.div>
-        )}
+            <span>{option}</span>
+            <svg
+              width={20}
+              data-slot="icon"
+              fill="none"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+              ></path>
+            </svg>
+          </button>
+          {openDropDownBtn && (
+            <motion.div
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full bg-slate-200 rounded-md flex flex-col justify-center items-center absolute top-full left-0 right-0 mt-4"
+            >
+              <span onClick={() => onClick(8)} className="w-full py-4 px-6">
+                8강 대진
+              </span>
+              <span onClick={() => onClick(16)} className="w-full py-4 px-6">
+                16강 대진
+              </span>
+              <span onClick={() => onClick(32)} className="w-full py-4 px-6">
+                32강 대진
+              </span>
+            </motion.div>
+          )}
+        </div>
       </div>
       <div className="w-full h-full grid grid-cols-2 gap-8">
         <div className="w-full min-h-[700px] rounded-md flex flex-col p-3 space-y-3 border border-slate-300">

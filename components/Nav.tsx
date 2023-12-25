@@ -21,6 +21,7 @@ const font = Cute_Font({ weight: "400", subsets: ["latin"] });
 const Nav = () => {
   const router = useRouter();
   const pathName = usePathname();
+  const regex = /^\/items(\/\d+)?$/;
   const { data: session } = useSession();
   const [providers, setProviders] = useState<Record<
     LiteralUnion<string>,
@@ -67,7 +68,7 @@ const Nav = () => {
               <Link href="/items">
                 <span className="cursor-pointer">선물 조회하기</span>
               </Link>
-              {pathName === "/items" && (
+              {regex.test(pathName) && (
                 <motion.div
                   layoutId="nav_under_bar"
                   className="w-14 h-1 absolute bg-slate-900 rounded-full top-full mt-2 m-auto left-0 right-0"
