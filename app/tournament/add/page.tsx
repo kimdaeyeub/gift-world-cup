@@ -64,7 +64,7 @@ const AddTournament = () => {
           <span className="text-nowrap text-xl font-medium">제목:</span>
           <input
             placeholder="월드컵 이름..."
-            className="bg-gray-100 px-4 py-2 rounded-md w-full"
+            className="bg-gray-100 px-4 py-2 rounded-md w-full outline-none"
           />
         </div>
         <div className="w-64 relative">
@@ -108,6 +108,13 @@ const AddTournament = () => {
             </motion.div>
           )}
         </div>
+      </div>
+      <div className="flex justify-center items-start w-full mb-4 space-x-4">
+        <span className="text-nowrap text-xl font-medium">설명</span>
+        <textarea
+          className="w-full bg-gray-100 rounded-lg resize-none outline-none px-4 py-2"
+          rows={5}
+        />
       </div>
       <div className="w-full h-full grid grid-cols-2 gap-8">
         <div className="w-full min-h-[700px] rounded-md flex flex-col p-3 space-y-3 border border-slate-300">
