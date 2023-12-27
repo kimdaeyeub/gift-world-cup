@@ -5,65 +5,100 @@ import SelectCard from "@/components/SelectCard";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
+//아이템을 클릭했을 때 생각해야 하는 것들
+// 1. 몇번째 라운드인지(예를들어 16강이면 16강인지 8강인지 준결승인지 결승인지)
+// 2. 무슨 아이템을 선택했는지
+// 3. 다음에 화면에 나와야 하는 아이템이 무엇인지
+// 4. 다음 라운드에 진출한 아이템이 무엇인지
+// 5. 지금하는 대진이 해당 라운드에서 몇번째 매치인지
+//
+// # 필요한 상태가 뭐있는지
+// 1. 해당 매치에서 선택된 아이템
+// 2. 현재 진행중인 매치가 무엇인지
+// 3. 다음 라운드에 진출한 아이템들
+// 4. 지금이 몇 라운드인지
+// 6.이번 라운드에 진출한 아이템 목록(시작 아이템들 포함)
+// 7. 이번 매치의 아이템들
+
 const idList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const PlayTournament = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  //토너먼트에서 선택된 아이템의 id
+
+  // 1. 해당 매치에서 선택된 아이템
   const [selectId, setSelectId] = useState<number | null>();
 
-  //현재 화면에 보이는 물품을 저장하는 리스트
-  const [currentItem, setCurrentItem] = useState<number[]>([]);
-
-  //현재 몇번째 매치인지를 나타내는 숫자
+  // 2. 현재 진행중인 매치가 무엇인지
   const [match, setMatch] = useState(1);
 
-  //다음 대진에 올라간 id값들을 저장하는 리스트
-  const [win, setWin] = useState<number[]>([]);
+  // 3. 다음 라운드에 진출한 아이템들
+  const [nextRoundItem, setNextRoundItem] = useState<number[]>([]);
 
-  const [currentMatch, setCurrentMatch] = useState<number[]>([]);
+  // 4. 지금이 몇 라운드인지
+  const [round, setRound] = useState(1);
 
-  const onSelect = (id: number) => {
-    setSelectId(id);
+  // 6.이번 라운드에 진출한 아이템 목록(시작 아이템들 포함)
+  const [currenRoundItem, setCurrentRoundItem] = useState<number[]>([]);
+  // 7. 이번 매치의 아이템들
+  const [currentMatchItem, setCurrentMatchItem] = useState<number[]>([]);
 
-    setWin((prev) => [...prev, id]);
-    setTimeout(() => {
-      setSelectId(null);
-      if (match === 8) {
-        updateScreen();
-      } else {
-        setMatch((prev) => prev + 1);
-      }
-      console.log(currentMatch);
-      const list = currentMatch.slice(2 * match, 2 * (match + 1));
-      setCurrentItem(list);
-    }, 300);
-  };
-
-  const updateScreen = () => {
-    setCurrentMatch(win);
-    setMatch(1);
-  };
   const onClickPlayButton = () => {
     setIsPlaying(true);
   };
 
+  // 1. 몇번째 라운드인지(예를들어 16강이면 16강인지 8강인지 준결승인지 결승인지) O
+  // 2. 무슨 아이템을 선택했는지
+  // 3. 다음에 화면에 나와야 하는 아이템이 무엇인지
+  // 4. 다음 라운드에 진출한 아이템이 무엇인지 O
+  // 5. 지금하는 대진이 해당 라운드에서 몇번째 매치인지 O
+  const onSelect = (id: number) => {
+    setSelectId(id);
+    setNextRoundItem((prev) => [...prev, id]);
+    setMatch((prev) => prev + 1);
+
+    setTimeout(() => {
+      setSelectId(null);
+      console.log(`match is ${match}`);
+    }, 200);
+  };
+
   useEffect(() => {
-    const list = idList.slice(0, 2);
-    setCurrentMatch(idList);
-    setCurrentItem(list);
+    setCurrentMatchItem([
+      currenRoundItem[2 * (match - 1)],
+      currenRoundItem[2 * (match - 1) + 1],
+    ]);
+    if (match === currenRoundItem.length / 2 + 1 && match !== 1) {
+      console.log("hello");
+      setMatch(1);
+      setRound((prev) => prev + 1);
+      setCurrentRoundItem(nextRoundItem);
+    }
+    if (nextRoundItem.length === 1) {
+      console.log("우승");
+      console.log(nextRoundItem);
+    }
+  }, [match]);
+
+  useEffect(() => {
+    setCurrentRoundItem(idList);
+    setCurrentMatchItem([idList[0], idList[1]]);
   }, []);
 
-  // console.log(currentMatch, win);
+  useEffect(() => {
+    if (currenRoundItem.length !== idList.length) {
+      setNextRoundItem([]);
+    }
+  }, [currenRoundItem]);
+
   return (
     <div className="w-full h-screen px-32 py-20 bg-red-100 flex justify-center items-center">
       {isPlaying ? (
         <div className="w-full h-full flex flex-col justify-center items-center">
           <span>
-            {currentMatch.length}의 대진 중 {match}
+            {currenRoundItem.length / 2}의 대진 중 {match}번째 매치입니다.
           </span>
           <div className="w-full h-full max-h-screen grid grid-cols-2 gap-10">
-            {currentItem.map((item) =>
+            {currentMatchItem.map((item) =>
               item === selectId ? (
                 <SelectCard key={item} />
               ) : (
