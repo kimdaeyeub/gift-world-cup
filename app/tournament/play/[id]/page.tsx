@@ -1,35 +1,80 @@
 "use client";
 
+import PlayCard from "@/components/PlayCard";
+import SelectCard from "@/components/SelectCard";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
+const idList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const PlayTournament = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  //토너먼트에서 선택된 아이템의 id
+  const [selectId, setSelectId] = useState<number | null>();
+
+  //현재 화면에 보이는 물품을 저장하는 리스트
+  const [currentItem, setCurrentItem] = useState<number[]>([]);
+
+  //현재 몇번째 매치인지를 나타내는 숫자
+  const [match, setMatch] = useState(1);
+
+  //다음 대진에 올라간 id값들을 저장하는 리스트
+  const [win, setWin] = useState<number[]>([]);
+
+  const [currentMatch, setCurrentMatch] = useState<number[]>([]);
+
+  const onSelect = (id: number) => {
+    setSelectId(id);
+
+    setWin((prev) => [...prev, id]);
+    setTimeout(() => {
+      setSelectId(null);
+      if (match === 8) {
+        updateScreen();
+      } else {
+        setMatch((prev) => prev + 1);
+      }
+      console.log(currentMatch);
+      const list = currentMatch.slice(2 * match, 2 * (match + 1));
+      setCurrentItem(list);
+    }, 300);
+  };
+
+  const updateScreen = () => {
+    setCurrentMatch(win);
+    setMatch(1);
+  };
   const onClickPlayButton = () => {
     setIsPlaying(true);
   };
+
+  useEffect(() => {
+    const list = idList.slice(0, 2);
+    setCurrentMatch(idList);
+    setCurrentItem(list);
+  }, []);
+
+  // console.log(currentMatch, win);
   return (
     <div className="w-full h-screen px-32 py-20 bg-red-100 flex justify-center items-center">
       {isPlaying ? (
-        <div className="w-full h-full max-h-screen grid grid-cols-2 gap-10">
-          <div className="w-full h-full overflow-hidden p-3 bg-white rounded-xl flex flex-col justify-center items-center space-y-3">
-            <Image
-              className="w-full h-full rounded-xl"
-              width={1000}
-              height={1000}
-              src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="tournament_image"
-            />
-            <span>Hello</span>
-          </div>
-          <div className="w-full h-full overflow-hidden p-3 bg-white rounded-xl">
-            <Image
-              className="w-full h-full rounded-xl"
-              width={1000}
-              height={1000}
-              src="https://images.unsplash.com/photo-1692641995795-59026e35e458?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              alt="tournament_image"
-            />
+        <div className="w-full h-full flex flex-col justify-center items-center">
+          <span>
+            {currentMatch.length}의 대진 중 {match}
+          </span>
+          <div className="w-full h-full max-h-screen grid grid-cols-2 gap-10">
+            {currentItem.map((item) =>
+              item === selectId ? (
+                <SelectCard key={item} />
+              ) : (
+                <PlayCard
+                  key={item}
+                  onSelect={() => {
+                    onSelect(item);
+                  }}
+                />
+              )
+            )}
           </div>
         </div>
       ) : (
