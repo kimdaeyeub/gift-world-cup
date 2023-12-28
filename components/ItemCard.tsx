@@ -8,14 +8,30 @@ const tagList = ["10대", "20대", "컴퓨터", "노트북"];
 
 interface IProp {
   hasRank?: boolean;
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  count: number;
+  creator: string;
+  _id: string;
 }
-const ItemCard = ({ hasRank }: IProp) => {
+const ItemCard = ({
+  hasRank,
+  title,
+  description,
+  tags,
+  image,
+  count,
+  creator,
+  _id,
+}: IProp) => {
   return (
-    <Link href="/items/123">
+    <Link href={`/items/${_id}`}>
       <div className="min-h-[300px] h-full w-full shadow-md border-2 border-slate-300 rounded-lg p-4 flex flex-col justify-center items-center gap-y-3">
         <div className="w-full h-full max-h-[350px] relative">
           <Image
-            src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={image}
             alt="item_image"
             width={500}
             height={500}
@@ -25,15 +41,15 @@ const ItemCard = ({ hasRank }: IProp) => {
             <div className="text-yellow-400 absolute top-4 left-4 flex justify-center items-center">
               <FaCertificate size={40} />
               <span className="text-white absolute text-xl font-semibold">
-                1
+                {count}
               </span>
             </div>
           )}
         </div>
         <div className="flex flex-col justify-center items-start w-full mt-4">
-          <span className="text-2xl font-medium">최신형 노트북</span>
+          <span className="text-2xl font-medium">{title}</span>
           <div className="flex flex-wrap w-full gap-x-3 gap-y-1.5 mt-2">
-            {tagList.map((item) => (
+            {tags.map((item) => (
               <Tag key={item} tag={item} />
             ))}
           </div>

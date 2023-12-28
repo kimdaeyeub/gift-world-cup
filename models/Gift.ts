@@ -28,6 +28,6 @@ const GiftSchema = new Schema({
   },
 });
 
-const Gift = models.Prompt || model("Gift", GiftSchema);
+const Gift = models.Gift || model("Gift", GiftSchema);
 
 export default Gift;

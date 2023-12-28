@@ -1,9 +1,20 @@
 "use client";
 
 import ItemCard from "@/components/ItemCard";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+interface IGift {
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  count: number;
+  creator: string;
+  _id: string;
+}
 
 const Items = () => {
+  const [gifts, setGifts] = useState<IGift[]>();
   useEffect(() => {
     const getGifts = async () => {
       try {
@@ -11,7 +22,7 @@ const Items = () => {
 
         if (response.ok) {
           const json = await response.json();
-          console.log(json);
+          setGifts(json);
         }
       } catch (error) {
         console.log(error);
@@ -46,11 +57,9 @@ const Items = () => {
       </div>
 
       <section className="min-h-96 w-full py-24 px-32 grid grid-cols-4 gap-5">
-        <ItemCard hasRank />
-        <ItemCard hasRank />
-        <ItemCard hasRank />
-        <ItemCard hasRank />
-        <ItemCard hasRank />
+        {gifts?.map((item) => (
+          <ItemCard key={item._id} hasRank {...item} />
+        ))}
       </section>
     </div>
   );
