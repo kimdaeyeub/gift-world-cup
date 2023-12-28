@@ -53,7 +53,7 @@ const Add = () => {
 
       console.log(response);
       if (response.ok) {
-        router.push("/");
+        router.push("/items");
       }
     } catch (error) {
       console.log(`Error is ${error}`);

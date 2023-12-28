@@ -14,7 +14,6 @@ export const GET = async (
       return NextResponse.json({
         message: "해당 정보의 물품이 존재하지 않습니다.",
       });
-    console.log(gift);
 
     return NextResponse.json(gift);
   } catch (error) {
