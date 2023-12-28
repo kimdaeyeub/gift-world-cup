@@ -1,7 +1,25 @@
+"use client";
+
 import ItemCard from "@/components/ItemCard";
-import React from "react";
+import React, { useEffect } from "react";
 
 const Items = () => {
+  useEffect(() => {
+    const getGifts = async () => {
+      try {
+        const response = await fetch("/api/gifts", { method: "GET" });
+
+        if (response.ok) {
+          const json = await response.json();
+          console.log(json);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getGifts();
+  }, []);
   return (
     <div className="flex flex-col justify-start items-center py-10 w-full">
       <div className="relative w-1/2 h-full">
@@ -28,11 +46,11 @@ const Items = () => {
       </div>
 
       <section className="min-h-96 w-full py-24 px-32 grid grid-cols-4 gap-5">
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
-        <ItemCard />
+        <ItemCard hasRank />
+        <ItemCard hasRank />
+        <ItemCard hasRank />
+        <ItemCard hasRank />
+        <ItemCard hasRank />
       </section>
     </div>
   );

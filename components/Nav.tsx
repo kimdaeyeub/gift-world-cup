@@ -54,7 +54,7 @@ const Nav = () => {
     setUpProviders();
   }, []);
   return (
-    <div className="w-full px-32 py-4 flex justify-between items-center">
+    <div className="w-full px-32 py-4 flex justify-between items-center border-b">
       <h1
         onClick={onClickGoHome}
         className="text-4xl font-semibold cursor-pointer"

@@ -6,7 +6,10 @@ import Link from "next/link";
 
 const tagList = ["10대", "20대", "컴퓨터", "노트북"];
 
-const ItemCard = () => {
+interface IProp {
+  hasRank?: boolean;
+}
+const ItemCard = ({ hasRank }: IProp) => {
   return (
     <Link href="/items/123">
       <div className="min-h-[300px] h-full w-full shadow-md border-2 border-slate-300 rounded-lg p-4 flex flex-col justify-center items-center gap-y-3">
@@ -18,10 +21,14 @@ const ItemCard = () => {
             height={500}
             className="w-full h-full object-cover rounded-md"
           />
-          <div className="text-yellow-400 absolute top-4 left-4 flex justify-center items-center">
-            <FaCertificate size={40} />
-            <span className="text-white absolute text-xl font-semibold">1</span>
-          </div>
+          {hasRank && (
+            <div className="text-yellow-400 absolute top-4 left-4 flex justify-center items-center">
+              <FaCertificate size={40} />
+              <span className="text-white absolute text-xl font-semibold">
+                1
+              </span>
+            </div>
+          )}
         </div>
         <div className="flex flex-col justify-center items-start w-full mt-4">
           <span className="text-2xl font-medium">최신형 노트북</span>

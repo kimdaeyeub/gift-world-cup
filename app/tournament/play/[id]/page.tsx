@@ -3,6 +3,7 @@
 import PlayCard from "@/components/PlayCard";
 import SelectCard from "@/components/SelectCard";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 //아이템을 클릭했을 때 생각해야 하는 것들
@@ -23,7 +24,10 @@ import React, { useEffect, useState } from "react";
 const idList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const PlayTournament = () => {
+  const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const [result, setResult] = useState(0);
 
   // 1. 해당 매치에서 선택된 아이템
   const [selectId, setSelectId] = useState<number | null>();
@@ -70,20 +74,32 @@ const PlayTournament = () => {
     if (match === currenRoundItem.length / 2 + 1 && match !== 1) {
       console.log("hello");
       setMatch(1);
-      setRound((prev) => prev + 1);
+      setRound((prev) => prev / 2);
       setCurrentRoundItem(nextRoundItem);
     }
-    if (nextRoundItem.length === 1) {
+    if (nextRoundItem.length === 1 && round === 1) {
+      //우승
       console.log("우승");
-      console.log(nextRoundItem);
+      router.push("/tournament/play/123/result");
+      setResult(nextRoundItem[0]);
+      setSelectId(null);
+      setIsPlaying(false);
+      setMatch(0);
+      setNextRoundItem([]);
+      setRound(0);
+      setCurrentMatchItem([]);
+      setCurrentRoundItem([]);
     }
   }, [match]);
 
+  //화면이 시작될때 초기화 시키는 작업
   useEffect(() => {
     setCurrentRoundItem(idList);
     setCurrentMatchItem([idList[0], idList[1]]);
+    setRound(idList.length);
   }, []);
 
+  //다음 라운드가 시작 될때 그다음 라운드에 진출한 아이템을 다시 저장하기 위해 비워두는 작업
   useEffect(() => {
     if (currenRoundItem.length !== idList.length) {
       setNextRoundItem([]);
