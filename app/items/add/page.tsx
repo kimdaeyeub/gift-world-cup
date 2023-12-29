@@ -51,7 +51,6 @@ const Add = () => {
         body: JSON.stringify(gift),
       });
 
-      console.log(response);
       if (response.ok) {
         router.push("/items");
       }
@@ -93,7 +92,7 @@ const Add = () => {
               alt="image_preview"
               width={500}
               height={500}
-              className="w-full h-full rounded-xl object-contain overflow-hidden border p-1"
+              className="w-full h-full max-h-[500px] rounded-xl object-cover overflow-hidden border p-1"
             />
           </div>
         )}

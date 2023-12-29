@@ -28,14 +28,14 @@ const ItemCard = ({
 }: IProp) => {
   return (
     <Link href={`/items/${_id}`}>
-      <div className="min-h-[300px] h-full w-full shadow-md border-2 border-slate-300 rounded-lg p-4 flex flex-col justify-start items-center gap-y-3">
+      <div className="min-h-[300px] h-full w-full shadow-md border-2 border-slate-300 rounded-lg p-4 flex flex-col justify-between items-center gap-y-3">
         <div className="w-full h-fit relative">
           <Image
             src={image}
             alt="item_image"
             width={500}
             height={500}
-            className="w-full h-[350px] object-cover rounded-md"
+            className="w-full h-[300px] object-cover rounded-md"
           />
           {hasRank && (
             <div className="text-yellow-400 absolute top-4 left-4 flex justify-center items-center">
@@ -47,7 +47,7 @@ const ItemCard = ({
           )}
         </div>
         <div className="flex flex-col justify-start items-start w-full ">
-          <span className="text-2xl font-medium">{title}</span>
+          <span className="text-xl font-medium">{title}</span>
           <div className="flex flex-wrap w-full gap-x-3 gap-y-1.5 mt-2">
             {tags.map((item) => (
               <Tag key={item} tag={item} />

@@ -44,7 +44,7 @@ const ItemDetail = () => {
               alt="item_image"
               width={500}
               height={500}
-              className="absolute top-full bottom-10 left-40 m-auto w-96 h-96 rounded-full"
+              className="absolute top-full bottom-10 left-40 m-auto w-96 h-96 rounded-full object-cover"
             />
           </div>
           <section className="h-full w-full flex flex-col justify-start items-start px-44 pt-16 pb-20 space-y-14">
