@@ -57,7 +57,7 @@ const AddTournament = () => {
     } else {
       if (num === selectItem.length) {
         setError("해당 대진의 선물 갯수를 초과했습니다");
-        return window.confirm(error);
+        return window.confirm("해당 대진의 선물 갯수를 초과했습니다");
       }
       setSelectItem([...selectItem, item]);
     }
@@ -69,7 +69,7 @@ const AddTournament = () => {
     setSelectItem([...beforeArr, ...afterArr]);
   };
 
-  const onClickAddWorldCup = () => {
+  const onClickAddWorldCup = async () => {
     console.log("hello");
     const newWorldCup = {
       title,
@@ -79,7 +79,15 @@ const AddTournament = () => {
       round: num,
     };
 
-    console.log(newWorldCup);
+    const response = await fetch("/api/worldcups/add", {
+      method: "POST",
+      body: JSON.stringify(newWorldCup),
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      router.push("/");
+    }
   };
 
   useEffect(() => {

@@ -3,7 +3,7 @@
 import PlayCard from "@/components/PlayCard";
 import SelectCard from "@/components/SelectCard";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 //아이템을 클릭했을 때 생각해야 하는 것들
@@ -25,6 +25,7 @@ const idList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const PlayTournament = () => {
   const router = useRouter();
+  const pathName = usePathname();
   const [isPlaying, setIsPlaying] = useState(false);
 
   const [result, setResult] = useState(0);
@@ -94,6 +95,16 @@ const PlayTournament = () => {
 
   //화면이 시작될때 초기화 시키는 작업
   useEffect(() => {
+    const getWorldCup = async () => {
+      const response = await fetch(`/api/worldcups/${pathName.slice(17)}`);
+
+      if (response.ok) {
+        const json = await response.json();
+        console.log(json);
+      }
+    };
+
+    getWorldCup();
     setCurrentRoundItem(idList);
     setCurrentMatchItem([idList[0], idList[1]]);
     setRound(idList.length);
